@@ -103,6 +103,9 @@ def wheel_of_fortune(n, center=None, clockwise=True):
     matrix = generate_wheel_of_fortune_matrix(n, center, -1 if clockwise else 1)
     parrots_from_matrix(matrix)
 
+def a():
+    parrots_from_matrix(a_matrix())
+
 def generate_circleish_matrix(n, center=None):
     center = center or (n//2, n//2)
     return [[distance_from_center(i, j, center) for j in range(n)]for i in range(n)]
@@ -115,6 +118,20 @@ def generate_wheel_of_fortune_matrix(n, center=None, offset_multiplier=1):
 def generate_spiral_matrix(n, center=None, arms=1, offset_multiplier=1):
     center = center or (n//2, n//2)
     return [[distance_from_center(i, j, center) + spiral_offset(i, j, center, 9*arms)*offset_multiplier for j in range(n)]for i in range(n)]
+
+def a_matrix():
+    return [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,5,6,1,1,1,1,1,1],
+        [1,1,1,1,1,1,5,6,5,6,1,1,1,1,1],
+        [1,1,1,1,1,5,6,1,1,5,6,1,1,1,1],
+        [1,1,1,1,5,5,5,5,5,5,5,6,1,1,1],
+        [1,1,1,5,1,1,1,1,1,1,1,5,6,1,1],
+        [1,1,5,1,1,1,1,1,1,1,1,1,5,6,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    ]
 
 
 def distance_from_center(a, b, center):
@@ -142,10 +159,22 @@ def get_angle(a, b, center):
 def forward(i):
     for j in range(i, 9+i):
         print_parrot(j%9+1)
-
 def backward(i):
     for k in range(9+i, i-1, -1):
         print_parrot(k%9+1)
 
 def print_parrot(num):
     print(f':wave-{num}-parrot:', end="")
+
+def print_parrot_hax(num):
+    if(num == 2):
+        print(f':twins_parrot:', end='')
+        return
+    if(num==6):
+        print(':monkey_face:', end='')
+        return
+    print(':palm_tree:', end='')
+
+def print_matrix(matrix):
+    for row in matrix:
+        print(row)
