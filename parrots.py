@@ -1,5 +1,5 @@
 from random import randint
-from math import atan, pi
+from math import atan, pi, sin
 
 def to_middle():
     for i in range(9):
@@ -66,8 +66,8 @@ def diagonal_wave():
         print('')
 
 def chaos():
-    for i in range (0, 18):
-        for j in range(0, 36):
+    for i in range (18):
+        for j in range(36):
             print_parrot(randint(1,9))
         print('')
 
@@ -79,6 +79,12 @@ def alternate():
             for j in range(0, 18):
                 print_parrot(5)
             print('')
+
+def sine_wave(n):
+    for i in range(n):
+        forward_sine(n, i)
+        print('')
+
 
 def parrots_from_matrix(matrix, reverse=False):
     for row in matrix:
@@ -155,6 +161,10 @@ def get_angle(a, b, center):
 
     return angle
 
+def forward_sine(n, i):
+    for j in range(n):
+        num = int(sin(j * 2*pi/n) * n + i)
+        print_parrot(num%9+1)
 
 def forward(i):
     for j in range(i, 9+i):
