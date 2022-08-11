@@ -96,14 +96,21 @@ def spiral(n):
     
 def spiral(n, center=None, arms=1, reverse=False, clockwise=True):
     clockwise = not clockwise if reverse else clockwise
-    matrix = generate_spiral_matrix(n, center, arms, -1 if clockwise else 1):
+    matrix = generate_spiral_matrix(n, center, arms, -1 if clockwise else 1)
     parrots_from_matrix(matrix, reverse)
 
+def wheel_of_fortune(n, center=None, clockwise=True):
+    matrix = generate_wheel_of_fortune_matrix(n, center, -1 if clockwise else 1)
+    parrots_from_matrix(matrix)
 
 def generate_circleish_matrix(n, center=None):
     center = center or (n//2, n//2)
     return [[distance_from_center(i, j, center) for j in range(n)]for i in range(n)]
-    
+
+def generate_wheel_of_fortune_matrix(n, center=None, offset_multiplier=1):
+    center = center or (n//2, n//2)
+    return [[spiral_offset(i, j, center, 9)*offset_multiplier for j in range(n)]for i in range(n)]
+
 
 def generate_spiral_matrix(n, center=None, arms=1, offset_multiplier=1):
     center = center or (n//2, n//2)
@@ -114,7 +121,7 @@ def distance_from_center(a, b, center):
     return int(((a-center[1])**2 + (b-center[0])**2)**.5)
 
 
-def spiral_offset(a, b, center, scale=18):
+def spiral_offset(a, b, center, scale=9):
     angle = get_angle(a, b, center)
     return int(angle*scale/2/pi)
 
