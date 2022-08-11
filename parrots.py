@@ -87,8 +87,9 @@ def circleish(n, center=None):
         print('')
 
 
-def spiral(n, center=None, arms=1, reverse=False):
-    for row in generate_spiral_matrix(n, center, arms):
+def spiral(n, center=None, arms=1, reverse=False, clockwise=True):
+    clockwise = not clockwise if reverse else clockwise
+    for row in generate_spiral_matrix(n, center, arms, -1 if clockwise else 1):
         for num in row:
             if reverse:
                 num *= -1
@@ -101,9 +102,9 @@ def generate_circleish_matrix(n, center=None):
     return [[distance_from_center(i, j, center) for j in range(n)]for i in range(n)]
     
 
-def generate_spiral_matrix(n, center=None, arms=1):
+def generate_spiral_matrix(n, center=None, arms=1, offset_multiplier=1):
     center = center or (n//2, n//2)
-    return [[distance_from_center(i, j, center) + spiral_offset(i, j, center, 9*arms) for j in range(n)]for i in range(n)]
+    return [[distance_from_center(i, j, center) + spiral_offset(i, j, center, 9*arms)*offset_multiplier for j in range(n)]for i in range(n)]
 
 
 def distance_from_center(a, b, center):
