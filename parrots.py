@@ -109,6 +109,9 @@ def wheel_of_fortune(n, center=None, clockwise=True):
     matrix = generate_wheel_of_fortune_matrix(n, center, -1 if clockwise else 1)
     parrots_from_matrix(matrix)
 
+def vertical_sine(n):
+    parrots_from_matrix(generate_sine_matrix(n))
+
 def a():
     parrots_from_matrix(a_matrix())
 
@@ -124,6 +127,16 @@ def generate_wheel_of_fortune_matrix(n, center=None, offset_multiplier=1):
 def generate_spiral_matrix(n, center=None, arms=1, offset_multiplier=1):
     center = center or (n//2, n//2)
     return [[distance_from_center(i, j, center) + spiral_offset(i, j, center, 9*arms)*offset_multiplier for j in range(n)]for i in range(n)]
+
+def generate_sine_matrix(n):
+    return [[(sin_to_parrot_index(n,j, i)) for j in range(n)] for i in range(n-1, -1, -1)]
+
+def sin_to_parrot_index(n, x, y):
+    val = sin(x/(n-1)*pi)*(n-1)+1
+    return int(((y+1)-val))%9
+
+def display_match(int_sin, i):
+    return '0' if int_sin == i else 'X'    
 
 def a_matrix():
     return [
