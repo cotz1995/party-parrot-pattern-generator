@@ -1,4 +1,5 @@
 from random import randint
+from math import atan, pi
 
 def to_middle():
     for i in range(9):
@@ -79,18 +80,52 @@ def alternate():
                 print_parrot(5)
             print('')
 
-def circleish(n):
-    for row in generate_circleish_matrix(n):
+def circleish(n, center=None):
+    for row in generate_circleish_matrix(n, center):
         for num in row:
             print_parrot(num%9+1)
         print('')
 
 
-def generate_circleish_matrix(n):
-    return [[distance_from_center(i, j, n//2) for j in range(n)]for i in range(n)]
+def spiral(n, center=None, arms=1, reverse=False):
+    for row in generate_spiral_matrix(n, center, arms):
+        for num in row:
+            if reverse:
+                num *= -1
+            print_parrot(num%9 + 1)
+        print('')
+
+
+def generate_circleish_matrix(n, center=None):
+    center = center or (n//2, n//2)
+    return [[distance_from_center(i, j, center) for j in range(n)]for i in range(n)]
+    
+
+def generate_spiral_matrix(n, center=None, arms=1):
+    center = center or (n//2, n//2)
+    return [[distance_from_center(i, j, center) + spiral_offset(i, j, center, 9*arms) for j in range(n)]for i in range(n)]
+
 
 def distance_from_center(a, b, center):
-    return int(((a-center)**2 + (b-center)**2)**.5)
+    return int(((a-center[1])**2 + (b-center[0])**2)**.5)
+
+
+def spiral_offset(a, b, center, scale=18):
+    angle = get_angle(a, b, center)
+    return int(angle*scale/2/pi)
+
+
+def get_angle(a, b, center):
+    y = center[1] - a
+    x = b - center[0]
+
+    angle = pi/2 if x == 0 else atan(y/x)
+    if angle < 0:
+        angle += pi
+    if y < 0 or (y == 0 and x < 0):
+        angle += pi
+
+    return angle
 
 
 def forward(i):
