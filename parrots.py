@@ -130,7 +130,7 @@ def generate_spiral_matrix(n, center=None, arms=1, offset_multiplier=1):
 
 def generate_sine_matrix(n):
     return [[(sin_to_parrot_index(n,j, i)) for j in range(n)] for i in range(n-1, -1, -1)]
-
+# needs to use phase shift based on x instead of y offset
 def sin_to_parrot_index(n, x, y):
     val = sin(x/(n-1)*pi)*(n-1)+1
     return int(((y+1)-val))%9
